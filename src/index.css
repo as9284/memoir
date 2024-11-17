@@ -10,6 +10,10 @@
 
 @layer components {
   .memoir-btn {
-    @apply w-32 h-12 font-medium text-base rounded-lg hover:bg-memoir-light/20 focus:bg-memoir-light/20 active:bg-memoir-light/40 duration-200;
+    @apply w-36 h-12 font-medium text-base rounded-lg hover:bg-memoir-light/20 focus:bg-memoir-light/20 active:bg-memoir-light/40 duration-200;
   }
+}
+
+.error {
+  background-color: rgb(255, 182, 169);
 }
