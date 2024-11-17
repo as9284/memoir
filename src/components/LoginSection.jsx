@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { auth } from "../services/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import Mountains from "../assets/mountains.webp";
 
 export const LoginSection = ({ setSection }) => {
@@ -12,6 +14,8 @@ export const LoginSection = ({ setSection }) => {
     email: "",
     password: "",
   });
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const validate = () => {
     const errors = {};
@@ -35,17 +39,46 @@ export const LoginSection = ({ setSection }) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Clear individual field errors as user types
     if (formErrors[name]) {
       setFormErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validate()) {
-      console.log("Login Submitted:", formData);
-      // Add your login logic here, e.g., API call
+    if (!validate()) return;
+
+    try {
+      setIsLoading(true);
+
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+
+      console.log("Logged in user:", userCredential.user);
+
+      alert("Login successful!");
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Login error:", error.message);
+
+      if (error.code === "auth/user-not-found") {
+        setFormErrors((prev) => ({
+          ...prev,
+          email: "No account found with this email.",
+        }));
+      } else if (error.code === "auth/wrong-password") {
+        setFormErrors((prev) => ({
+          ...prev,
+          password: "Incorrect password.",
+        }));
+      } else {
+        alert("An error occurred. Please try again.");
+      }
+
+      setIsLoading(false);
     }
   };
 
@@ -105,9 +138,9 @@ export const LoginSection = ({ setSection }) => {
           <button
             type="submit"
             className="memoir-btn"
-            disabled={formErrors.email || formErrors.password}
+            disabled={isLoading || formErrors.email || formErrors.password}
           >
-            Login
+            {isLoading ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>

@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { auth } from "../services/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { updateProfile } from "firebase/auth";
 import Mountains from "../assets/mountains.webp";
 
 export const SignupSection = ({ setSection }) => {
@@ -15,18 +18,18 @@ export const SignupSection = ({ setSection }) => {
     password: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const validate = () => {
     const errors = {};
     if (!formData.name.trim()) {
       errors.name = "Name is required.";
     }
-
     if (!formData.email.trim()) {
       errors.email = "Email is required.";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       errors.email = "Email is invalid.";
     }
-
     if (!formData.password.trim()) {
       errors.password = "Password is required.";
     } else if (formData.password.length < 6) {
@@ -46,10 +49,31 @@ export const SignupSection = ({ setSection }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validate()) {
-      console.log("Form Submitted:", formData);
+    if (!validate()) return;
+
+    try {
+      setIsLoading(true);
+
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+
+      await updateProfile(userCredential.user, {
+        displayName: formData.name,
+      });
+
+      console.log("User created and profile updated:", userCredential.user);
+
+      alert("Account created successfully!");
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error creating account:", error.message);
+      alert(error.message);
+      setIsLoading(false);
     }
   };
 
@@ -124,10 +148,13 @@ export const SignupSection = ({ setSection }) => {
               type="submit"
               className="memoir-btn"
               disabled={
-                formErrors.name || formErrors.email || formErrors.password
+                isLoading ||
+                formErrors.name ||
+                formErrors.email ||
+                formErrors.password
               }
             >
-              Create Account
+              {isLoading ? "Creating..." : "Create Account"}
             </button>
           </div>
         </form>
