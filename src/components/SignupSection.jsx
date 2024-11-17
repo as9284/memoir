@@ -66,12 +66,9 @@ export const SignupSection = ({ setSection }) => {
         displayName: formData.name,
       });
 
-      console.log("User created and profile updated:", userCredential.user);
-
       alert("Account created successfully!");
       setIsLoading(false);
     } catch (error) {
-      console.error("Error creating account:", error.message);
       alert(error.message);
       setIsLoading(false);
     }
