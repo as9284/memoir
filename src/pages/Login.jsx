@@ -7,7 +7,7 @@ export const Login = () => {
   return (
     <>
       <div className="w-full min-h-dvh m-auto flex flex-col justify-center items-center p-4">
-        <div className="relative w-full md:w-3/4 h-[26rem] lg:w-[55rem] lg:h-[36.5rem] bg-memoir-dark rounded-2xl flex justify-center items-center gap-2 p-1 text-memoir-light text-left select-none">
+        <div className="relative w-full sm:w-3/5 md:w-3/6 h-[26rem] lg:w-[55rem] lg:h-[36.5rem] bg-memoir-dark rounded-2xl flex justify-center items-center gap-2 p-1 text-memoir-light text-left select-none">
           <img
             className="hidden lg:block w-96 rounded-2xl"
             src={Mountains}
