@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-dmsans bg-memoir-light text-memoir-dark;
+  }
+}
+
+@layer components {
+  .memoir-btn {
+    @apply w-32 h-12 font-medium text-base rounded-lg hover:bg-memoir-light/20 focus:bg-memoir-light/20 active:bg-memoir-light/40 duration-200;
+  }
+}
