@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { auth } from "../services/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import Mountains from "../assets/mountains.webp";
 
 export const SignupSection = ({ setSection }) => {
@@ -10,12 +9,14 @@ export const SignupSection = ({ setSection }) => {
     name: "",
     email: "",
     password: "",
+    agreeToTerms: false,
   });
 
   const [formErrors, setFormErrors] = useState({
     name: "",
     email: "",
     password: "",
+    agreeToTerms: "",
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -35,14 +36,19 @@ export const SignupSection = ({ setSection }) => {
     } else if (formData.password.length < 6) {
       errors.password = "Password must be at least 6 characters.";
     }
+    if (!formData.agreeToTerms) {
+      errors.agreeToTerms = "You must agree to the terms.";
+    }
 
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const { name, value, type, checked } = e.target;
+    const inputValue = type === "checkbox" ? checked : value;
+
+    setFormData({ ...formData, [name]: inputValue });
 
     if (formErrors[name]) {
       setFormErrors((prev) => ({ ...prev, [name]: "" }));
@@ -75,7 +81,7 @@ export const SignupSection = ({ setSection }) => {
   };
 
   return (
-    <div className="relative w-full sm:w-3/5 md:w-3/6 h-[30rem] lg:w-[55rem] lg:h-[36.5rem] bg-memoir-dark rounded-2xl shadow-xl flex justify-center items-center gap-2 p-1 text-memoir-light text-left select-none">
+    <div className="relative w-full sm:w-3/5 md:w-3/6 h-[33rem] lg:w-[55rem] lg:h-[36.5rem] bg-memoir-dark rounded-2xl shadow-xl flex justify-center items-center gap-2 p-1 text-memoir-light text-left select-none">
       <img
         className="hidden lg:block w-96 rounded-2xl"
         src={Mountains}
@@ -141,6 +147,24 @@ export const SignupSection = ({ setSection }) => {
                 placeholder={formErrors.password || "Enter your password"}
               />
             </div>
+            <div className="w-full flex justify-center  items-center gap-2 px-4">
+              <input
+                type="checkbox"
+                name="agreeToTerms"
+                checked={formData.agreeToTerms}
+                onChange={handleInputChange}
+                className="w-5 h-5 accent-memoir-light hover:brightness-90"
+              />
+              <label className="text-sm lg:text-base text-memoir-light">
+                I agree to the{" "}
+                <span className="underline cursor-pointer font-bold">
+                  Privacy Policy
+                </span>
+              </label>
+            </div>
+            {formErrors.agreeToTerms && (
+              <p className="text-red-500 text-xs">{formErrors.agreeToTerms}</p>
+            )}
             <button
               type="submit"
               className="memoir-btn"

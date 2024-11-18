@@ -14,7 +14,7 @@ export const Login = () => {
         }}
         className="w-full min-h-dvh bg-cover m-auto flex flex-col justify-center items-center"
       >
-        <div className="w-full min-h-screen bg-memoir-light/80 backdrop-blur-2xl flex flex-col justify-center items-center p-4">
+        <div className="w-full min-h-screen bg-memoir-light/40 backdrop-blur-2xl flex flex-col justify-center items-center p-4">
           {section === "login" ? (
             <LoginSection setSection={setSection} />
           ) : (
