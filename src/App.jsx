@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Notes } from "./pages/Notes";
 import { auth } from "./services/firebase";
-import "ldrs/infinity";
+import { Loading } from "./components/Loading";
 
 export const App = () => {
   const [user, setUser] = useState(null);
@@ -22,20 +22,7 @@ export const App = () => {
   }, []);
 
   if (isLoading) {
-    return (
-      <div className="w-full min-h-dvh flex items-center justify-center bg-memoir-light z-50">
-        <div className="text-lg font-semibold">
-          <l-infinity
-            size="55"
-            stroke="4"
-            stroke-length="0.15"
-            bg-opacity="0.1"
-            speed="1.3"
-            color="black"
-          ></l-infinity>
-        </div>
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
