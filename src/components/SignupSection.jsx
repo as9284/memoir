@@ -71,9 +71,8 @@ export const SignupSection = ({ setSection }) => {
       await updateProfile(userCredential.user, {
         displayName: formData.name,
       });
-
-      alert("Account created successfully!");
       setIsLoading(false);
+      setSection("login");
     } catch (error) {
       alert(error.message);
       setIsLoading(false);

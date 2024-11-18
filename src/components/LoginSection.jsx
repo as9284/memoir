@@ -56,8 +56,6 @@ export const LoginSection = ({ setSection }) => {
         formData.email,
         formData.password
       );
-
-      alert("Login successful!");
       setIsLoading(false);
     } catch (error) {
       if (error.code === "auth/user-not-found") {
