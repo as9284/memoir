@@ -12,6 +12,10 @@
   .memoir-btn {
     @apply w-36 h-12 font-medium text-base rounded-lg hover:bg-memoir-light/20 focus:bg-memoir-light/20 active:bg-memoir-light/40 duration-200;
   }
+
+  .memoir-header-btn {
+    @apply w-28 h-10 font-medium text-base rounded-lg hover:bg-memoir-dark/20 focus:bg-memoir-dark/20 active:bg-memoir-dark/40 duration-200;
+  }
 }
 
 .error {
