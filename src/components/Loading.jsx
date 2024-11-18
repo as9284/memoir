@@ -1,5 +1,4 @@
 import React from "react";
-import "ldrs/infinity";
 
 export const Loading = () => {
   return (
