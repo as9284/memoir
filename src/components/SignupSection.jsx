@@ -163,7 +163,9 @@ export const SignupSection = ({ setSection }) => {
               </label>
             </div>
             {formErrors.agreeToTerms && (
-              <p className="text-red-500 text-xs">{formErrors.agreeToTerms}</p>
+              <p className="text-red-500 font-bold text-xs">
+                {formErrors.agreeToTerms}
+              </p>
             )}
             <button
               type="submit"
