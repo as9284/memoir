@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-
-import { Login } from "./pages/Login";
-import { Notes } from "./pages/Notes";
+import { BrowserRouter } from "react-router-dom";
 import { auth } from "./services/firebase";
 import { Loading } from "./components/Loading";
+import { AppContent } from "./components/AppContent";
 
 export const App = () => {
   const [user, setUser] = useState(null);
@@ -21,24 +19,10 @@ export const App = () => {
     return () => unsubscribe();
   }, []);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={user ? <Navigate to="/notes" replace /> : <Login />}
-          />
-          <Route
-            path="/notes"
-            element={user ? <Notes /> : <Navigate to="/" replace />}
-          />
-        </Routes>
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      {isLoading && <Loading />}
+      <AppContent user={user} />
+    </BrowserRouter>
   );
 };
