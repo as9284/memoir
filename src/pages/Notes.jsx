@@ -57,6 +57,8 @@ export const Notes = () => {
     setIsExpanded(true);
   };
 
+  const sortedNotes = notes.sort((a, b) => a.title.localeCompare(b.title));
+
   return (
     <>
       <div className="w-full min-h-dvh m-auto flex flex-col justify-start items-center">
@@ -66,7 +68,7 @@ export const Notes = () => {
         </h4>
 
         <div className="w-full flex flex-col justify-center items-center gap-4 px-4 pt-2 pb-4">
-          {notes.map((note) => (
+          {sortedNotes.map((note) => (
             <div
               onClick={() => expandNote(note)}
               key={note.id}
