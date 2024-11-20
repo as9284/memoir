@@ -55,7 +55,7 @@ export const Notes = () => {
           {notes.map((note) => (
             <div
               key={note.id}
-              className="w-full md:w-3/4 min-h-16 flex justify-between items-start drop-shadow-md bg-memoir-dark text-memoir-light rounded-lg text-center brightness-100 text-lg p-4 cursor-pointer hover:brightness-125 duration-200"
+              className="w-full md:w-3/4 min-h-16 flex justify-between items-start drop-shadow-md bg-memoir-dark text-memoir-light rounded-lg text-center brightness-100 text-lg p-4 cursor-pointer hover:brightness-125 hover:-translate-y-1 duration-200"
             >
               <h5 className="w-3/4 text-xl font-bold text-left break-words whitespace-normal">
                 {note.title}
