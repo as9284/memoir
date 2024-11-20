@@ -8,6 +8,7 @@ import {
   deleteNoteFromFirestore,
 } from "../services/notes";
 import { ExpandedNote } from "../components/ExpandedNote";
+import { FaArrowUp } from "react-icons/fa";
 
 export const Notes = () => {
   const [notes, setNotes] = useState([]);
@@ -16,6 +17,7 @@ export const Notes = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedNote, setSelectedNote] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showScrollButton, setShowScrollButton] = useState(false);
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -25,6 +27,26 @@ export const Notes = () => {
     };
     fetchNotes();
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 1) {
+        setShowScrollButton(true);
+      } else {
+        setShowScrollButton(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   const refreshNotes = async () => {
     const fetchedNotes = await fetchNotesFromFirestore();
@@ -136,6 +158,16 @@ export const Notes = () => {
             noteId={selectedNote.id}
             refreshNotes={refreshNotes}
           />
+        )}
+
+        {showScrollButton && (
+          <button
+            onClick={scrollToTop}
+            className="fixed bottom-4 right-4 bg-memoir-light text-memoir-dark p-4 rounded-full drop-shadow-lg hover:brightness-110 hover:-translate-y-1 duration-200"
+            aria-label="Scroll to top"
+          >
+            <FaArrowUp />
+          </button>
         )}
       </div>
     </>
