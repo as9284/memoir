@@ -102,7 +102,7 @@ export const Notes = () => {
           placeholder="Search notes..."
           className="w-3/4 md:w-1/2 p-3 indent-2 bg-memoir-dark mb-4 text-memoir-light rounded-lg placeholder:text-neutral-400"
         />
-        <h4 className="text-lg opacity-50 font-medium text-center select-none">
+        <h4 className="text-lg text-memoir-dark/40 font-medium text-center select-none mt-4">
           {notes.length === 0 ? "Looks empty in here..." : null}
         </h4>
 
