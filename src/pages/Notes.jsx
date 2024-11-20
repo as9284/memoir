@@ -163,7 +163,7 @@ export const Notes = () => {
         {showScrollButton && (
           <button
             onClick={scrollToTop}
-            className="fixed bottom-4 right-4 bg-memoir-light text-memoir-dark p-4 rounded-full drop-shadow-lg hover:brightness-110 hover:-translate-y-1 duration-200"
+            className="fixed bottom-4 right-4 bg-memoir-light text-memoir-dark p-4 rounded-full drop-shadow-lg hover:brightness-110 hover:-translate-y-1 duration-200 z-10"
             aria-label="Scroll to top"
           >
             <FaArrowUp />
