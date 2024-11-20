@@ -100,7 +100,7 @@ export const Notes = () => {
           value={searchQuery}
           onChange={handleSearchChange}
           placeholder="Search notes..."
-          className="w-3/4 md:w-1/2 p-3 indent-2 bg-memoir-dark mb-4 text-memoir-light rounded-lg placeholder:text-neutral-400"
+          className="w-3/4 md:w-1/2 p-3 indent-2 bg-memoir-light drop-shadow-md mb-4 text-memoir-dark rounded-lg placeholder:text-neutral-400 hover:drop-shadow-xl duration-200"
         />
         <h4 className="text-lg text-memoir-dark/40 font-medium text-center select-none mt-4">
           {notes.length === 0 ? "Looks empty in here..." : null}

@@ -24,6 +24,10 @@
   .memoir-note-btn {
     @apply w-14 h-12 font-medium text-2xl rounded-lg hover:bg-memoir-light/20 focus:bg-memoir-light/20 active:bg-memoir-light/40 duration-200 flex justify-center items-center;
   }
+
+  .memoir-note-btn-dark {
+    @apply w-14 h-12 font-medium text-2xl rounded-lg hover:bg-memoir-dark/20 focus:bg-memoir-dark/20 active:bg-memoir-dark/40 duration-200 flex justify-center items-center;
+  }
 }
 
 .error {
