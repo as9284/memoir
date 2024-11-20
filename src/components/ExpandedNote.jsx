@@ -35,15 +35,15 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
 
   return (
     <>
-      <div className="fixed w-full min-h-dvh bg-memoir-dark/40 flex flex-col justify-center items-center">
-        <div className="relative w-[90dvw] h-[90dvh] bg-memoir-light rounded-xl flex flex-col justify-center items-center gap-2">
+      <div className="fixed w-full min-h-dvh flex flex-col justify-center items-center">
+        <div className="relative w-[100dvw] h-[100dvh] bg-memoir-light rounded-xl flex flex-col justify-center items-center gap-2">
           <input
             type="text"
             value={editableTitle}
             onChange={handleTitleChange}
             className="absolute top-4 w-full text-2xl md:text-3xl font-bold bg-transparent text-center border-none outline-none px-4 py-2"
           />
-          <div className="w-full h-3/4 flex justify-center items-center overflow-y-auto p-8">
+          <div className="w-full h-3/4 flex justify-center items-center overflow-y-auto p-2">
             <textarea
               value={content}
               onChange={handleContentChange}
