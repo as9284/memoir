@@ -28,8 +28,17 @@ export const Notes = () => {
   };
 
   const deleteNote = async (id) => {
-    await deleteNoteFromFirestore(id);
     setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+
+    try {
+      await deleteNoteFromFirestore(id);
+    } catch (error) {
+      setNotes((prevNotes) => [
+        ...prevNotes,
+        notes.find((note) => note.id === id),
+      ]);
+      console.error("Failed to delete note", error);
+    }
   };
 
   const toggleModal = () => setIsCreateOpen((prev) => !prev);
@@ -42,16 +51,16 @@ export const Notes = () => {
           {notes.length === 0 ? "Looks empty in here..." : null}
         </h4>
 
-        <div className="w-full flex flex-col justify-center items-center gap-4 px-4">
+        <div className="w-full flex flex-col justify-center items-center gap-4 px-4 pt-2 pb-4">
           {notes.map((note) => (
             <div
               key={note.id}
-              className="relative w-full h-16 flex justify-center items-center drop-shadow-md bg-memoir-dark text-memoir-light rounded-lg text-center brightness-100 text-lg p-4 cursor-pointer hover:brightness-125 duration-200"
+              className="w-full md:w-3/4 min-h-16 flex justify-between items-start drop-shadow-md bg-memoir-dark text-memoir-light rounded-lg text-center brightness-100 text-lg p-4 cursor-pointer hover:brightness-125 duration-200"
             >
-              <h5 className="absolute text-xl font-bold left-4">
+              <h5 className="w-3/4 text-xl font-bold text-left break-words whitespace-normal">
                 {note.title}
               </h5>
-              <div className="absolute right-4 flex justify-center items-center gap-2">
+              <div className="flex justify-center items-center gap-2">
                 <button
                   className="memoir-note-btn"
                   onClick={() => deleteNote(note.id)}
