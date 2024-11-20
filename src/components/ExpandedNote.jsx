@@ -41,7 +41,7 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
             type="text"
             value={editableTitle}
             onChange={handleTitleChange}
-            className="absolute top-6 w-full text-2xl md:text-3xl font-bold bg-transparent text-center border-none outline-none px-4 py-2"
+            className="absolute top-4 w-full text-2xl md:text-3xl font-bold bg-transparent text-center border-none outline-none px-4 py-2"
           />
           <div className="w-full h-3/4 flex justify-center items-center overflow-y-auto p-8">
             <textarea
