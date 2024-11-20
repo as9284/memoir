@@ -26,17 +26,19 @@ export const App = () => {
   }
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={user ? <Navigate to="/notes" replace /> : <Login />}
-        />
-        <Route
-          path="/notes"
-          element={user ? <Notes /> : <Navigate to="/" replace />}
-        />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={user ? <Navigate to="/notes" replace /> : <Login />}
+          />
+          <Route
+            path="/notes"
+            element={user ? <Notes /> : <Navigate to="/" replace />}
+          />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 };

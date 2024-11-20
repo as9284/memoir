@@ -14,7 +14,7 @@ export default {
         "memoir-b-dark": "rgb(70,64,61)",
       },
       colors: {
-        "memoir-light": "rgb(242,223,212)",
+        "memoir-light": "rgb(245,241,237)",
         "memoir-dark": "rgb(70,64,61)",
       },
     },
