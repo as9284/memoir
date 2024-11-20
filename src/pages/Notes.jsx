@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Header } from "../components/Header";
 import { NewNote } from "../components/NewNote";
 import { MdDelete } from "react-icons/md";
+import { Confirmation } from "../components/Confirmation";
 import {
   addNoteToFirestore,
   fetchNotesFromFirestore,
@@ -18,6 +19,8 @@ export const Notes = () => {
   const [selectedNote, setSelectedNote] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [noteToDelete, setNoteToDelete] = useState(null);
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -63,10 +66,17 @@ export const Notes = () => {
     }
   };
 
-  const deleteNote = async (id, e) => {
-    e.stopPropagation();
+  const confirmDelete = (id) => {
+    setIsConfirmOpen(true);
+    setNoteToDelete(id);
+  };
+
+  const deleteNote = async () => {
+    const id = noteToDelete;
+
     setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
     setFilteredNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+    setIsConfirmOpen(false);
 
     try {
       await deleteNoteFromFirestore(id);
@@ -141,7 +151,10 @@ export const Notes = () => {
               <div className="flex justify-center items-center gap-2">
                 <button
                   className="memoir-note-btn"
-                  onClick={(e) => deleteNote(note.id, e)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    confirmDelete(note.id);
+                  }}
                 >
                   <MdDelete />
                 </button>
@@ -168,6 +181,13 @@ export const Notes = () => {
           >
             <FaArrowUp />
           </button>
+        )}
+
+        {isConfirmOpen && (
+          <Confirmation
+            onConfirm={deleteNote}
+            onCancel={() => setIsConfirmOpen(false)}
+          />
         )}
       </div>
     </>
