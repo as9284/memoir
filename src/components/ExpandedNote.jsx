@@ -4,6 +4,7 @@ import { saveNoteContent, fetchNotesFromFirestore } from "../services/notes";
 export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
   const [content, setContent] = useState("");
   const [editableTitle, setEditableTitle] = useState(title);
+  const [scale, setScale] = useState(0.9);
 
   useEffect(() => {
     const loadContent = async () => {
@@ -17,6 +18,9 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
     if (noteId) {
       loadContent();
     }
+
+    const timeoutId = setTimeout(() => setScale(1), 10);
+    return () => clearTimeout(timeoutId);
   }, [noteId, title]);
 
   const handleContentChange = (e) => {
@@ -30,13 +34,24 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
   const handleSave = async () => {
     await saveNoteContent(noteId, editableTitle, content);
     refreshNotes();
-    closeModal();
+    setTimeout(closeModal);
+  };
+
+  const handleCancel = () => {
+    setTimeout(closeModal);
   };
 
   return (
     <>
-      <div className="fixed w-full min-h-dvh flex flex-col justify-center items-center">
-        <div className="relative w-[100dvw] h-[100dvh] bg-memoir-light rounded-xl flex flex-col justify-center items-center gap-2">
+      <div
+        className="fixed w-full min-h-dvh flex justify-center items-center z-50"
+        style={{
+          transform: `scale(${scale})`,
+          opacity: scale,
+          transition: "transform 0.2s ease, opacity 0.2s ease",
+        }}
+      >
+        <div className="relative w-[100dvw] h-[100dvh] bg-memoir-light flex flex-col justify-center items-center gap-2">
           <input
             type="text"
             value={editableTitle}
@@ -55,7 +70,7 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
             <button className="memoir-btn-dark w-32" onClick={handleSave}>
               Save
             </button>
-            <button className="memoir-btn-dark w-32" onClick={closeModal}>
+            <button className="memoir-btn-dark w-32" onClick={handleCancel}>
               Cancel
             </button>
           </div>
