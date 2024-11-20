@@ -11,14 +11,17 @@ import { ExpandedNote } from "../components/ExpandedNote";
 
 export const Notes = () => {
   const [notes, setNotes] = useState([]);
+  const [filteredNotes, setFilteredNotes] = useState([]);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedNote, setSelectedNote] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchNotes = async () => {
       const fetchedNotes = await fetchNotesFromFirestore();
       setNotes(fetchedNotes);
+      setFilteredNotes(fetchedNotes);
     };
     fetchNotes();
   }, []);
@@ -26,26 +29,29 @@ export const Notes = () => {
   const refreshNotes = async () => {
     const fetchedNotes = await fetchNotesFromFirestore();
     setNotes(fetchedNotes);
+    filterNotes(searchQuery, fetchedNotes);
   };
 
   const addNote = async (title) => {
     if (title.trim()) {
       const newNote = await addNoteToFirestore(title);
-      setNotes((prevNotes) => [...prevNotes, newNote]);
+      const updatedNotes = [...notes, newNote];
+      setNotes(updatedNotes);
+      filterNotes(searchQuery, updatedNotes);
     }
   };
 
   const deleteNote = async (id, e) => {
     e.stopPropagation();
     setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+    setFilteredNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
 
     try {
       await deleteNoteFromFirestore(id);
     } catch (error) {
-      setNotes((prevNotes) => [
-        ...prevNotes,
-        notes.find((note) => note.id === id),
-      ]);
+      const restoredNote = notes.find((note) => note.id === id);
+      setNotes((prevNotes) => [...prevNotes, restoredNote]);
+      setFilteredNotes((prevNotes) => [...prevNotes, restoredNote]);
       console.error("Failed to delete note", error);
     }
   };
@@ -57,12 +63,45 @@ export const Notes = () => {
     setIsExpanded(true);
   };
 
-  const sortedNotes = notes.sort((a, b) => a.title.localeCompare(b.title));
+  const filterNotes = (query, sourceNotes = notes) => {
+    if (query.trim() === "") {
+      setFilteredNotes(sourceNotes);
+    } else {
+      const lowerCaseQuery = query.toLowerCase();
+      setFilteredNotes(
+        sourceNotes.filter((note) =>
+          note.title.toLowerCase().includes(lowerCaseQuery)
+        )
+      );
+    }
+  };
+
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    const timeoutId = setTimeout(() => {
+      filterNotes(query);
+    }, 300);
+
+    return () => clearTimeout(timeoutId);
+  };
+
+  const sortedNotes = filteredNotes.sort((a, b) =>
+    a.title.localeCompare(b.title)
+  );
 
   return (
     <>
       <div className="w-full min-h-dvh m-auto flex flex-col justify-start items-center">
         <Header toggleModal={toggleModal} />
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          placeholder="Search notes..."
+          className="w-3/4 md:w-1/2 p-3 indent-2 bg-memoir-dark mb-4 text-memoir-light rounded-lg placeholder:text-neutral-400"
+        />
         <h4 className="text-lg opacity-50 font-medium text-center select-none">
           {notes.length === 0 ? "Looks empty in here..." : null}
         </h4>
