@@ -47,7 +47,7 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
             <textarea
               value={content}
               onChange={handleContentChange}
-              className="w-full h-full p-4 bg-transparent rounded-lg outline-none border-none resize-none"
+              className="w-full h-full p-4 bg-transparent rounded-lg outline-none border-none resize-none placeholder:text-neutral-400"
               placeholder="Write your note here..."
             />
           </div>
