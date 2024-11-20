@@ -7,11 +7,12 @@ import {
   doc,
   query,
   where,
+  getDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { getDoc } from "firebase/firestore";
 
-export const addNoteToFirestore = async (title) => {
+export const addNoteToFirestore = async (title, content = "") => {
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -20,10 +21,11 @@ export const addNoteToFirestore = async (title) => {
   const notesRef = collection(db, "notes");
   const docRef = await addDoc(notesRef, {
     title,
+    content,
     ownerId: user.uid,
   });
 
-  return { id: docRef.id, title };
+  return { id: docRef.id, title, content };
 };
 
 export const fetchNotesFromFirestore = async () => {
@@ -37,7 +39,11 @@ export const fetchNotesFromFirestore = async () => {
   const q = query(notesRef, where("ownerId", "==", user.uid));
 
   const snapshot = await getDocs(q);
-  return snapshot.docs.map((doc) => ({ id: doc.id, title: doc.data().title }));
+  return snapshot.docs.map((doc) => ({
+    id: doc.id,
+    title: doc.data().title,
+    content: doc.data().content || "",
+  }));
 };
 
 export const deleteNoteFromFirestore = async (id) => {
@@ -53,5 +59,21 @@ export const deleteNoteFromFirestore = async (id) => {
     await deleteDoc(noteRef);
   } else {
     throw new Error("Unauthorized attempt to delete a note");
+  }
+};
+
+export const saveNoteContent = async (noteId, title, content) => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  if (!user) throw new Error("User not authenticated");
+
+  const noteRef = doc(db, "notes", noteId);
+  const noteDoc = await getDoc(noteRef);
+
+  if (noteDoc.exists() && noteDoc.data().ownerId === user.uid) {
+    await updateDoc(noteRef, { title, content });
+  } else {
+    throw new Error("Unauthorized attempt to edit a note");
   }
 };
