@@ -11,12 +11,15 @@ import {
 import { ExpandedNote } from "../components/ExpandedNote";
 import { FaArrowUp } from "react-icons/fa";
 import { Settings } from "../components/Settings";
+import { FaFilePen } from "react-icons/fa6";
+import { PreviewedNote } from "../components/PreviewedNote";
 
 export const Notes = () => {
   const [notes, setNotes] = useState([]);
   const [filteredNotes, setFilteredNotes] = useState([]);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isPreviewed, setIsPreviewed] = useState(false);
   const [selectedNote, setSelectedNote] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showScrollButton, setShowScrollButton] = useState(false);
@@ -121,6 +124,11 @@ export const Notes = () => {
     setIsExpanded(true);
   };
 
+  const previewNote = (note) => {
+    setSelectedNote(note);
+    setIsPreviewed(true);
+  };
+
   const filterNotes = (query, sourceNotes = notes) => {
     if (query.trim() === "") {
       setFilteredNotes(sourceNotes);
@@ -167,14 +175,23 @@ export const Notes = () => {
         <div className="w-full flex flex-col justify-center items-center gap-4 px-4 pt-2 pb-4">
           {sortedNotes.map((note) => (
             <div
-              onClick={() => expandNote(note)}
               key={note.id}
               className="w-full md:w-3/4 min-h-16 flex justify-between items-start drop-shadow-md bg-memoir-dark text-memoir-light rounded-lg text-center brightness-100 text-lg p-4 cursor-pointer hover:brightness-125 hover:-translate-y-1 duration-200"
+              onClick={() => previewNote(note)}
             >
               <h5 className="w-3/4 text-xl font-bold text-left break-words whitespace-normal">
                 {note.title}
               </h5>
               <div className="flex justify-center items-center gap-2">
+                <button
+                  className="memoir-note-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    expandNote(note);
+                  }}
+                >
+                  <FaFilePen />
+                </button>
                 <button
                   className="memoir-note-btn"
                   onClick={(e) => {
@@ -196,6 +213,13 @@ export const Notes = () => {
             closeModal={() => setIsExpanded(false)}
             noteId={selectedNote.id}
             refreshNotes={refreshNotes}
+          />
+        )}
+        {isPreviewed && selectedNote && (
+          <PreviewedNote
+            title={selectedNote.title}
+            closeModal={() => setIsPreviewed(false)}
+            noteId={selectedNote.id}
           />
         )}
 

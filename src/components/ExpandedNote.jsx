@@ -64,7 +64,7 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
                 type="text"
                 value={editableTitle}
                 onChange={handleTitleChange}
-                className="w-full rounded-lg py-2 indent-3 bg-memoir-dark text-memoir-light shadow-md placeholder:text-neutral-300 outline-none"
+                className="w-full rounded-lg px-2 py-2 bg-memoir-dark text-memoir-light shadow-md placeholder:text-neutral-300 outline-none"
               />
             </div>
             <div className="w-full h-full flex flex-col justify-center items-center">
@@ -74,7 +74,7 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
               <textarea
                 value={content}
                 onChange={handleContentChange}
-                className="w-full h-full rounded-lg py-2 indent-3 bg-memoir-dark text-memoir-light shadow-md placeholder:text-neutral-300 outline-none resize-none"
+                className="w-full h-full rounded-lg px-2 py-2 bg-memoir-dark text-memoir-light shadow-md placeholder:text-neutral-300 outline-none resize-none"
                 placeholder="Write your note here..."
               />
             </div>
