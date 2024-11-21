@@ -7,7 +7,7 @@ export const Header = ({ toggleModal, toggleSettings }) => {
         <h1 className="text-3xl md:text-5xl font-bold">Memoir</h1>
         <div className="w-full flex justify-center items-center gap-2">
           <button onClick={toggleModal} className="memoir-header-btn">
-            New
+            Create Note
           </button>
           <button className="memoir-header-btn" onClick={toggleSettings}>
             Settings
