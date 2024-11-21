@@ -1,19 +1,6 @@
 import React from "react";
-import { auth } from "../services/firebase";
-import { useNavigate } from "react-router-dom";
 
-export const Header = ({ toggleModal }) => {
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    try {
-      await auth.signOut();
-      navigate("/");
-    } catch (error) {
-      console.error("Error logging out:", error.message);
-    }
-  };
-
+export const Header = ({ toggleModal, toggleSettings }) => {
   return (
     <>
       <div className="w-full h-24 flex flex-col justify-center items-center gap-4 my-6 select-none">
@@ -22,9 +9,8 @@ export const Header = ({ toggleModal }) => {
           <button onClick={toggleModal} className="memoir-header-btn">
             New
           </button>
-          <button className="memoir-header-btn">Settings</button>
-          <button onClick={handleLogout} className="memoir-header-btn">
-            Logout
+          <button className="memoir-header-btn" onClick={toggleSettings}>
+            Settings
           </button>
         </div>
       </div>

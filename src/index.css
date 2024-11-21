@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply font-dmsans bg-memoir-light text-memoir-dark;
+    @apply font-dmsans bg-memoir-light text-memoir-dark dark:bg-memoir-darker dark:text-memoir-light duration-200;
   }
 }
 
@@ -18,7 +18,7 @@
   }
 
   .memoir-header-btn {
-    @apply w-28 h-10 font-medium text-base rounded-lg hover:bg-memoir-dark/20 focus:bg-memoir-dark/20 active:bg-memoir-dark/40 duration-200;
+    @apply w-28 h-10 font-medium text-base rounded-lg hover:bg-memoir-dark/20 focus:bg-memoir-dark/20 active:bg-memoir-dark/40 duration-200 dark:hover:bg-memoir-light/20 dark:focus:bg-memoir-light/20 dark:active:bg-memoir-light/40;
   }
 
   .memoir-note-btn {

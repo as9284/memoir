@@ -51,7 +51,7 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
           transition: "transform 0.2s ease, opacity 0.2s ease",
         }}
       >
-        <div className="relative w-[100dvw] h-[100dvh] bg-memoir-light flex flex-col justify-center items-center gap-2">
+        <div className="relative w-[100dvw] h-[100dvh] bg-memoir-light flex flex-col justify-center items-center gap-2 dark:bg-memoir-dark duration-200">
           <input
             type="text"
             value={editableTitle}
@@ -67,10 +67,16 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
             />
           </div>
           <div className="absolute bottom-4 w-full flex justify-center items-center gap-4">
-            <button className="memoir-btn-dark w-32" onClick={handleSave}>
+            <button
+              className="memoir-btn-dark w-32 dark:memoir-btn dark:w-32"
+              onClick={handleSave}
+            >
               Save
             </button>
-            <button className="memoir-btn-dark w-32" onClick={handleCancel}>
+            <button
+              className="memoir-btn-dark w-32 dark:memoir-btn dark:w-32"
+              onClick={handleCancel}
+            >
               Cancel
             </button>
           </div>

@@ -10,6 +10,7 @@ import {
 } from "../services/notes";
 import { ExpandedNote } from "../components/ExpandedNote";
 import { FaArrowUp } from "react-icons/fa";
+import { Settings } from "../components/Settings";
 
 export const Notes = () => {
   const [notes, setNotes] = useState([]);
@@ -21,6 +22,30 @@ export const Notes = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [noteToDelete, setNoteToDelete] = useState(null);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState("light");
+
+  const toggleDarkMode = (mode) => {
+    setDarkMode(mode);
+    if (mode === "dark") {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  };
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      document.documentElement.classList.add("dark");
+      setDarkMode("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      setDarkMode("light");
+    }
+  }, []);
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -89,6 +114,7 @@ export const Notes = () => {
   };
 
   const toggleModal = () => setIsCreateOpen((prev) => !prev);
+  const toggleSettings = () => setIsSettingsOpen(!isSettingsOpen);
 
   const expandNote = (note) => {
     setSelectedNote(note);
@@ -126,13 +152,13 @@ export const Notes = () => {
   return (
     <>
       <div className="w-full min-h-dvh m-auto flex flex-col justify-start items-center">
-        <Header toggleModal={toggleModal} />
+        <Header toggleModal={toggleModal} toggleSettings={toggleSettings} />
         <input
           type="text"
           value={searchQuery}
           onChange={handleSearchChange}
           placeholder="Search notes..."
-          className="w-3/4 md:w-1/2 p-3 indent-2 bg-memoir-dark drop-shadow-md mb-4 text-memoir-light rounded-lg placeholder:text-neutral-400"
+          className="w-3/4 md:w-1/2 p-3 indent-2 bg-memoir-light drop-shadow-md mb-4 text-memoir-dark rounded-lg placeholder:text-neutral-400 dark:bg-memoir-dark dark:text-memoir-light"
         />
         <h4 className="text-lg text-memoir-dark/40 font-medium text-center select-none mt-2">
           {notes.length === 0 ? "Looks empty in here..." : null}
@@ -187,6 +213,14 @@ export const Notes = () => {
           <Confirmation
             onConfirm={deleteNote}
             onCancel={() => setIsConfirmOpen(false)}
+          />
+        )}
+
+        {isSettingsOpen && (
+          <Settings
+            closeModal={toggleSettings}
+            setMode={toggleDarkMode}
+            currentMode={darkMode}
           />
         )}
       </div>
