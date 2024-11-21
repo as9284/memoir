@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "react-quill/dist/quill.bubble.css";
 import { fetchNotesFromFirestore } from "../services/notes";
 
 export const PreviewedNote = ({ title, noteId, closeModal }) => {
@@ -41,9 +42,10 @@ export const PreviewedNote = ({ title, noteId, closeModal }) => {
             {editableTitle}
           </p>
 
-          <div className="w-full h-full px-2 py-2 text-memoir-dark break-words whitespace-normal overflow-y-auto dark:text-memoir-light">
-            {content}
-          </div>
+          <div
+            className="ql-editor w-full h-full px-2 py-2 text-memoir-dark break-words whitespace-normal overflow-y-auto dark:text-memoir-light"
+            dangerouslySetInnerHTML={{ __html: content }}
+          ></div>
         </div>
         <div className="w-full flex justify-center items-center gap-4">
           <button

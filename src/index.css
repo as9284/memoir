@@ -6,6 +6,14 @@
   body {
     @apply font-dmsans bg-memoir-light text-memoir-dark dark:bg-memoir-darker dark:text-memoir-light duration-200;
   }
+
+  .custom-quill-editor {
+    @apply text-base font-dmsans text-memoir-light;
+  }
+
+  .custom-quill-editor .ql-editor.ql-blank::before {
+    @apply text-neutral-400 font-normal text-base font-dmsans;
+  }
 }
 
 @layer components {
@@ -32,4 +40,23 @@
 
 .error {
   background-color: rgb(255, 182, 169);
+}
+
+.ql-editor {
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.ql-editor h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.ql-editor h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.ql-editor ul {
+  margin-left: 1rem;
 }

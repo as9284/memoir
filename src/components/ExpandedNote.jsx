@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.bubble.css";
 import { saveNoteContent, fetchNotesFromFirestore } from "../services/notes";
 
 export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
@@ -23,8 +25,8 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
     return () => clearTimeout(timeoutId);
   }, [noteId, title]);
 
-  const handleContentChange = (e) => {
-    setContent(e.target.value);
+  const handleContentChange = (value) => {
+    setContent(value);
   };
 
   const handleTitleChange = (e) => {
@@ -41,6 +43,16 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
     setTimeout(closeModal);
   };
 
+  const quillModules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link", "image"],
+      ["clean"],
+    ],
+  };
+
   return (
     <>
       <div
@@ -55,26 +67,29 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
           <h2 className="text-2xl md:text-3xl font-bold select-none">
             Edit Note
           </h2>
-          <div className="w-full md:w-3/4 h-3/4 flex flex-col justify-center items-center overflow-y-auto p-4 gap-2">
+          <div className="w-full h-3/4 flex flex-col justify-center items-center overflow-y-auto p-4 gap-2">
             <div className="w-full flex flex-col justify-center items-center">
-              <h3 className="w-full text-lg font-bold text-left py-1">
+              <h3 className="w-full md:w-3/4 text-lg font-bold text-left py-1">
                 Title:
               </h3>
               <input
                 type="text"
                 value={editableTitle}
                 onChange={handleTitleChange}
-                className="w-full rounded-lg px-2 py-2 bg-memoir-dark text-memoir-light shadow-md placeholder:text-neutral-300 outline-none"
+                className="w-full md:w-3/4 rounded-lg px-4 py-2 bg-memoir-dark text-memoir-light shadow-md placeholder:text-neutral-400 placeholder:italic outline-none"
+                placeholder="Enter the note title..."
               />
             </div>
-            <div className="w-full h-full flex flex-col justify-center items-center">
+            <div className="w-full md:w-3/4 h-full flex flex-col justify-center items-center">
               <h3 className="w-full text-lg font-bold text-left py-1">
                 Content:
               </h3>
-              <textarea
+              <ReactQuill
                 value={content}
                 onChange={handleContentChange}
-                className="w-full h-full rounded-lg px-2 py-2 bg-memoir-dark text-memoir-light shadow-md placeholder:text-neutral-300 outline-none resize-none"
+                className="custom-quill-editor w-full h-full rounded-lg bg-memoir-dark text-memoir-light shadow-md outline-none"
+                modules={quillModules}
+                theme="bubble"
                 placeholder="Write your note here..."
               />
             </div>
