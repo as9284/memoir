@@ -37,11 +37,11 @@ export const PreviewedNote = ({ title, noteId, closeModal }) => {
           Note Preview
         </h2>
         <div className="w-full md:w-3/4 h-3/4 flex flex-col justify-center items-center overflow-y-auto p-4 gap-2">
-          <p className="w-full text-xl font-bold py-2 text-memoir-light text-center break-words whitespace-normal">
+          <p className="w-full text-xl font-bold py-2 text-memoir-dark text-center break-words whitespace-normal dark:text-memoir-light">
             {editableTitle}
           </p>
 
-          <div className="w-full h-full px-2 py-2 text-memoir-light break-words whitespace-normal overflow-y-auto">
+          <div className="w-full h-full px-2 py-2 text-memoir-dark break-words whitespace-normal overflow-y-auto dark:text-memoir-light">
             {content}
           </div>
         </div>
