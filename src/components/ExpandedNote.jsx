@@ -52,21 +52,34 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
         }}
       >
         <div className="relative w-[100dvw] h-[100dvh] bg-memoir-light flex flex-col justify-center items-center gap-2 dark:bg-memoir-darker duration-200">
-          <input
-            type="text"
-            value={editableTitle}
-            onChange={handleTitleChange}
-            className="absolute top-4 w-full text-2xl md:text-3xl font-bold bg-transparent text-center border-none outline-none px-4 py-2"
-          />
-          <div className="w-full h-3/4 flex justify-center items-center overflow-y-auto p-2">
-            <textarea
-              value={content}
-              onChange={handleContentChange}
-              className="w-full h-full p-4 bg-transparent rounded-lg outline-none border-none resize-none placeholder:text-neutral-400"
-              placeholder="Write your note here..."
-            />
+          <h2 className="text-2xl md:text-3xl font-bold select-none">
+            Edit Note
+          </h2>
+          <div className="w-full md:w-3/4 h-3/4 flex flex-col justify-center items-center overflow-y-auto p-4 gap-2">
+            <div className="w-full flex flex-col justify-center items-center">
+              <h3 className="w-full text-lg font-bold text-left py-1">
+                Title:
+              </h3>
+              <input
+                type="text"
+                value={editableTitle}
+                onChange={handleTitleChange}
+                className="w-full rounded-lg py-2 indent-3 bg-memoir-dark text-memoir-light shadow-md placeholder:text-neutral-300 outline-none"
+              />
+            </div>
+            <div className="w-full h-full flex flex-col justify-center items-center">
+              <h3 className="w-full text-lg font-bold text-left py-1">
+                Content:
+              </h3>
+              <textarea
+                value={content}
+                onChange={handleContentChange}
+                className="w-full h-full rounded-lg py-2 indent-3 bg-memoir-dark text-memoir-light shadow-md placeholder:text-neutral-300 outline-none resize-none"
+                placeholder="Write your note here..."
+              />
+            </div>
           </div>
-          <div className="absolute bottom-4 w-full flex justify-center items-center gap-4">
+          <div className="w-full flex justify-center items-center gap-4">
             <button
               className="memoir-btn-dark w-32 dark:memoir-btn dark:w-32"
               onClick={handleSave}
