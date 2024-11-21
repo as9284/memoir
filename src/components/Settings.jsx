@@ -33,7 +33,7 @@ export const Settings = ({ closeModal, setMode, currentMode }) => {
         onClick={handleOutsideClick}
         className="fixed w-full min-h-dvh bg-memoir-dark/60 flex flex-col justify-center items-center select-none"
       >
-        <div className="relative w-80 h-72 bg-memoir-light drop-shadow-lg rounded-xl flex flex-col justify-center items-center gap-4 p-4 text-center dark:bg-memoir-dark duration-200">
+        <div className="relative w-80 h-72 bg-memoir-light drop-shadow-lg rounded-xl flex flex-col justify-center items-center gap-4 p-4 text-center dark:bg-memoir-darker duration-200">
           <h3 className="text-2xl font-bold">Settings</h3>
           <div className="w-full flex flex-col justify-center items-center">
             <h5 className="text-base font-medium">Theme</h5>

@@ -51,7 +51,7 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
           transition: "transform 0.2s ease, opacity 0.2s ease",
         }}
       >
-        <div className="relative w-[100dvw] h-[100dvh] bg-memoir-light flex flex-col justify-center items-center gap-2 dark:bg-memoir-dark duration-200">
+        <div className="relative w-[100dvw] h-[100dvh] bg-memoir-light flex flex-col justify-center items-center gap-2 dark:bg-memoir-darker duration-200">
           <input
             type="text"
             value={editableTitle}
