@@ -20,15 +20,15 @@ export const Confirmation = ({ onConfirm, onCancel }) => {
           <div className="w-full flex justify-center items-center gap-2">
             <button
               className="memoir-btn-dark w-32 dark:memoir-btn dark:w-32"
-              onClick={onConfirm}
-            >
-              Delete
-            </button>
-            <button
-              className="memoir-btn-dark w-32 dark:memoir-btn dark:w-32"
               onClick={onCancel}
             >
               Cancel
+            </button>
+            <button
+              className="memoir-btn-dark w-32 dark:memoir-btn dark:w-32"
+              onClick={onConfirm}
+            >
+              Delete
             </button>
           </div>
         </div>

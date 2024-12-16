@@ -36,15 +36,15 @@ export const NewNote = ({ addNote, closeModal }) => {
         <div className="w-full flex justify-center items-center gap-2">
           <button
             className="memoir-btn-dark w-32 dark:memoir-btn dark:w-32"
-            onClick={handleCreate}
-          >
-            Create
-          </button>
-          <button
-            className="memoir-btn-dark w-32 dark:memoir-btn dark:w-32"
             onClick={closeModal}
           >
             Close
+          </button>
+          <button
+            className="memoir-btn-dark w-32 dark:memoir-btn dark:w-32"
+            onClick={handleCreate}
+          >
+            Create
           </button>
         </div>
       </div>
