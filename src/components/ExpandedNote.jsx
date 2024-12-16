@@ -67,7 +67,7 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
           <h2 className="text-2xl md:text-3xl font-bold select-none">
             Edit Note
           </h2>
-          <div className="w-full h-3/4 flex flex-col justify-center items-center p-4 gap-2">
+          <div className="w-full h-3/4 flex flex-col justify-center items-center gap-2">
             <div className="w-full flex flex-col justify-center items-center">
               <h3 className="w-full md:w-3/4 text-lg font-bold text-left py-1">
                 Title:
