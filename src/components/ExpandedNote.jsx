@@ -97,15 +97,15 @@ export const ExpandedNote = ({ title, closeModal, noteId, refreshNotes }) => {
           <div className="w-full flex justify-center items-center gap-4 py-4">
             <button
               className="memoir-btn-dark w-32 dark:memoir-btn dark:w-32"
-              onClick={handleSave}
-            >
-              Save
-            </button>
-            <button
-              className="memoir-btn-dark w-32 dark:memoir-btn dark:w-32"
               onClick={handleCancel}
             >
               Cancel
+            </button>
+            <button
+              className="memoir-btn-dark w-32 dark:memoir-btn dark:w-32"
+              onClick={handleSave}
+            >
+              Save
             </button>
           </div>
         </div>
